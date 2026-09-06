@@ -1,5 +1,9 @@
 package com.h4rl3y.peerdroid.Crypto;
 
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+
 /**
  * Utility class for cryptographic operations.
  * Status: In Development
@@ -11,15 +15,17 @@ package com.h4rl3y.peerdroid.Crypto;
  */
 public class CryptoUtils {
     /**
-     * Encrypts the given data using the provided secret key.
+     * Encrypts the given data using AES encryption with the provided secret key.
      *
      * @param data The data to encrypt.
      * @param key  The secret key to use for encryption.
-     * @return The encrypted data.
+     * @return The encrypted data as a Base64-encoded string.
      * @throws Exception If an error occurs during encryption.
      */
     public static String encrypt(String data, SecretKey key)throws Exception {
-        // Implement encryption logic here
-        return null; // Placeholder return statement
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encryptedData = cipher.doFinal(data.getBytes());
+        return Base64.getEncoder().encodeToString(encryptedData); // Placeholder return statement
     }
 }
