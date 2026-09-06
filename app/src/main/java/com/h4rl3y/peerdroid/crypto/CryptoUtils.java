@@ -30,4 +30,21 @@ public class CryptoUtils {
         byte[] encryptedData = cipher.doFinal(data.getBytes());
         return Base64.getEncoder().encodeToString(encryptedData); 
     }
+
+    /**
+     * Decrypts the given encrypted data using AES decryption with the provided
+     * secret key.
+     * 
+     * @param encryptedData The encrypted data as a Base64-encoded string.
+     * @param key           The secret key to use for decryption.
+     * @return The decrypted data as a string.
+     * @throws Exception If an error occurs during decryption.
+     */
+    public static String decrypt(String encryptedData, SecretKey key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        byte[] decodedData = Base64.getDecoder().decode(encryptedData);
+        byte[] decryptedData = cipher.doFinal(decodedData);
+        return new String(decryptedData);
+    }
 }
