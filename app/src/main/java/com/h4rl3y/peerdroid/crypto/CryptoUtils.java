@@ -1,8 +1,10 @@
 package com.h4rl3y.peerdroid.crypto;
 
+import java.security.SecureRandom;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 /**
@@ -46,5 +48,17 @@ public class CryptoUtils {
         byte[] decodedData = Base64.getDecoder().decode(encryptedData);
         byte[] decryptedData = cipher.doFinal(decodedData);
         return new String(decryptedData);
+    }
+
+    /**
+     * Generates a new random AES secret key.
+     * 
+     * @return A new AES secret key.
+     * @throws Exception If an error occurs during key generation.
+     */
+    public static SecretKey generateKey() throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(256, new SecureRandom());
+        return keyGen.generateKey();
     }
 }
