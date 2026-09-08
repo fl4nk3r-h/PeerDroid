@@ -57,10 +57,11 @@ public class MessageListener {
                         continue;
                     }
 
-                    messageQueue.put(decrypted);
+                    final String message = decrypted;
+                    messageQueue.put(message);
                     dispatchExecutor.execute(() -> {
                         if (onMessageReceived != null)
-                            onMessageReceived.accept(decrypted);
+                            onMessageReceived.accept(message);
                     });
                 }
 
