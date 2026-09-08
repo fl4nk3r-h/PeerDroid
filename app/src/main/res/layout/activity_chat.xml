@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_chat.xml — PeerDroid Chat Screen
+    ─────────────────────────────────────────────────
+    ViewBinding IDs to hook in ChatActivity.java:
+      binding.toolbar              → MaterialToolbar (back nav)
+      binding.tvPeerId             → peer ID in header e.g. "peer@192.168.0.34:8989"
+      binding.tvEncryptionStatus   → "E2E Encrypted" label
+      binding.btnTerminate         → red terminate button (top right)
+      binding.messagesRecyclerView → RecyclerView — message list
+      binding.inputMessage         → TextInputEditText for composing
+      binding.btnSend              → send IconButton
+      binding.inputBar             → the bottom bar container
+
+    Intent extras expected:
+      "peer_id"   → String  e.g. "peer-7f3a"
+      "peer_ip"   → String  e.g. "192.168.0.34"
+      "peer_port" → int     e.g. 8989
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_dark_background"
+    tools:ignore="MissingClass">
+
+    <!-- ── Header ─────────────────────────────────────────────── -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface_container"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:icon="@drawable/back_arrow_foreground"
+            app:iconTint="@color/md_theme_dark_onSurface"
+            app:iconSize="20dp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Peer avatar + info -->
+        <LinearLayout
+            android:id="@+id/peerInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintEnd_toStartOf="@id/btnTerminate"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Avatar circle with peer initial -->
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/peer_avatar_bg"
+                android:layout_marginEnd="12dp">
+
+                <TextView
+                    android:id="@+id/tvPeerInitial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/peer"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="@color/md_theme_dark_onPrimaryContainer"
+                    android:fontFamily="@font/space_grotesk"
+                    android:fontWeight="700" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPeerId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="peer-7f3a"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="@color/md_theme_dark_onSurface"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:fontFamily="@font/jetbrains_mono" />
+
+                <!-- Encryption + connection status row -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/status_dot_connected"
+                        android:layout_marginEnd="5dp" />
+
+                    <TextView
+                        android:id="@+id/tvEncryptionStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="E2E Encrypted · Connected"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:textColor="@color/status_connected" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Terminate button — danger red -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTerminate"
+            style="@style/Widget.PeerDroid.Button.Danger"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="End"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:paddingHorizontal="16dp"
+            app:icon="@drawable/end_chat_foreground"
+            app:iconSize="16dp"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/peerInfo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ── Thin divider below header ─────────────────────────── -->
+    <View
+        android:id="@+id/headerDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_theme_dark_outlineVariant"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ── Messages RecyclerView ─────────────────────────────── -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/headerDivider"
+        app:layout_constraintBottom_toTopOf="@id/inputBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- ── Input Bar ──────────────────────────────────────────── -->
+    <LinearLayout
+        android:id="@+id/inputBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/surface_container"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Text input field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:boxStrokeColor="@color/md_theme_dark_outlineVariant"
+            app:boxStrokeWidthFocused="1.5dp"
+            app:boxCornerRadiusTopStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:hint="Message"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="4"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:fontFamily="@font/jetbrains_mono"
+                android:textColor="@color/md_theme_dark_onSurface"
+                android:textColorHint="@color/md_theme_dark_onSurfaceVariant"
+                android:textSize="14sp"
+                android:background="@null"
+                android:imeOptions="actionSend" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Send button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSend"
+            style="@style/Widget.Material3.Button.IconButton.Filled"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:icon="@drawable/send_message_foreground"
+            app:iconTint="@color/md_theme_dark_onPrimary"
+            app:iconSize="20dp"
+            android:backgroundTint="@color/md_theme_dark_primary" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

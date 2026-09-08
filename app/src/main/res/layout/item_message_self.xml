@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    item_message_self.xml
+    Your own sent messages — right-aligned, teal bubble
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="end"
+    android:paddingVertical="3dp"
+    android:paddingHorizontal="4dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:maxWidth="280dp">
+
+        <TextView
+            android:id="@+id/tvMessageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bubble_self"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="10dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/bubble_self_text"
+            android:fontFamily="@font/jetbrains_mono"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.4"
+            android:text="Message text" />
+
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:text="12:34"
+            android:textAppearance="?attr/textAppearanceLabelSmall"
+            android:textColor="@color/md_theme_dark_onSurfaceVariant"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+</LinearLayout>

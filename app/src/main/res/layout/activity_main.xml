@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    activity_main.xml — PeerDroid Connection Screen
+    ─────────────────────────────────────────────────
+    ViewBinding IDs to hook in MainActivity.java:
+      binding.toolbar              → MaterialToolbar
+      binding.appTitle             → "PeerDroid" headline
+      binding.appSubtitle          → subtitle text
+      binding.connectionCard       → connection section card
+      binding.statusDot            → colored dot (status_dot_*.xml)
+      binding.statusText           → "Idle" / "Connected" / "Listening"
+      binding.toggleHost           → Host (Listen) toggle button
+      binding.togglePeer           → Peer (Connect) toggle button
+      binding.labelHostIp          → "Host IP" label (show/hide per mode)
+      binding.inputHostIp          → TextInputLayout for IP
+      binding.editHostIp           → TextInputEditText for IP
+      binding.labelPort            → "Port" / "Listen Port" label
+      binding.inputPort            → TextInputLayout for port
+      binding.editPort             → TextInputEditText for port
+      binding.tvLocalIp            → "Local IP: x.x.x.x" display
+      binding.btnPrimary           → "Connect" / "Start Listening"
+      binding.btnShare             → "Share" (host mode only)
+      binding.searchCard           → Search Peers card
+      binding.btnScan              → "Start Scan" / "Stop Scan"
+      binding.scanProgress         → CircularProgressIndicator
+      binding.peersRecyclerView    → RecyclerView for peer list
+      binding.tvNoPeers            → "No peers found yet."
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_dark_background">
+
+    <!-- ── Top App Bar ───────────────────────────────────────── -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_theme_dark_background"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@+id/scrollView">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="30dp"
+            app:titleEnabled="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/appTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PeerDroid"
+                    android:textAppearance="?attr/textAppearanceHeadlineLarge"
+                    android:textColor="@color/md_theme_dark_onBackground" />
+
+                <TextView
+                    android:id="@+id/appSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Local Wi-Fi P2P · encrypted"
+                    android:textAppearance="?attr/textAppearanceLabelMedium"
+                    android:textColor="@color/md_theme_dark_onSurfaceVariant" />
+
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ── Scrollable Content ─────────────────────────────────── -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="32dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
+
+            <!-- ╔══════════════════════════════════════╗ -->
+            <!-- ║        CONNECTION CARD               ║ -->
+            <!-- ╚══════════════════════════════════════╝ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/connectionCard"
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface_container"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/md_theme_dark_outlineVariant"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.PeerDroid.Medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Card header: title + status -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Connection"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="@color/md_theme_dark_onSurface" />
+
+                        <!-- Status pill: dot + text -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@color/surface_container_high"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp">
+
+                            <View
+                                android:id="@+id/statusDot"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/status_dot_idle"
+                                android:layout_marginEnd="6dp" />
+
+                            <TextView
+                                android:id="@+id/statusText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Idle"
+                                android:textAppearance="?attr/textAppearanceLabelSmall"
+                                android:textColor="@color/status_idle" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Mode toggle: Host | Peer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/toggle_container"
+                        android:padding="4dp"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:id="@+id/toggleHost"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Host (Listen)"
+                            android:gravity="center"
+                            android:background="@drawable/toggle_selected"
+                            android:textAppearance="?attr/textAppearanceLabelLarge"
+                            android:textColor="@color/md_theme_dark_onPrimaryContainer"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                        <TextView
+                            android:id="@+id/togglePeer"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Peer (Connect)"
+                            android:gravity="center"
+                            android:background="@drawable/toggle_unselected"
+                            android:textAppearance="?attr/textAppearanceLabelLarge"
+                            android:textColor="@color/md_theme_dark_onSurfaceVariant"
+                            android:clickable="true"
+                            android:focusable="true" />
+
+                    </LinearLayout>
+
+                    <!-- Host IP field (hidden in Host mode, shown in Peer mode) -->
+                    <TextView
+                        android:id="@+id/labelHostIp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Host IP"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:textColor="@color/md_theme_dark_onSurfaceVariant"
+                        android:layout_marginBottom="6dp"
+                        android:visibility="gone" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputHostIp"
+                        style="@style/Widget.PeerDroid.TextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="192.168.x.x"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editHostIp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textNoSuggestions"
+                            android:imeOptions="actionNext"
+                            android:fontFamily="@font/jetbrains_mono"
+                            android:textColor="@color/md_theme_dark_onSurface"
+                            android:textSize="15sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Port field (always visible) -->
+                    <TextView
+                        android:id="@+id/labelPort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Listen Port"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:textColor="@color/md_theme_dark_onSurfaceVariant"
+                        android:layout_marginBottom="6dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputPort"
+                        style="@style/Widget.PeerDroid.TextInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="8989">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editPort"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:imeOptions="actionDone"
+                            android:fontFamily="@font/jetbrains_mono"
+                            android:textColor="@color/md_theme_dark_onSurface"
+                            android:textSize="15sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Local IP display (host mode only) -->
+                    <TextView
+                        android:id="@+id/tvLocalIp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Local IP: "
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:textColor="@color/md_theme_dark_primary"
+                        android:layout_marginBottom="20dp" />
+
+                    <!-- Action buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnPrimary"
+                            style="@style/Widget.PeerDroid.Button.Primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="Start Listening"
+                            android:layout_marginEnd="8dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnShare"
+                            style="@style/Widget.PeerDroid.Button.Outlined"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="Share"
+                            app:icon="@drawable/share_arrow_fg"
+                            app:iconGravity="textStart"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ╔══════════════════════════════════════╗ -->
+            <!-- ║        SEARCH PEERS CARD             ║ -->
+            <!-- ╚══════════════════════════════════════╝ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/searchCard"
+                style="@style/Widget.Material3.CardView.Elevated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface_container"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/md_theme_dark_outlineVariant"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.PeerDroid.Medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Card header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Search Peers"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="@color/md_theme_dark_onSurface" />
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/scanProgress"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/md_theme_dark_primary"
+                            app:trackColor="@color/md_theme_dark_surfaceVariant"
+                            app:indicatorSize="24dp"
+                            app:trackThickness="2dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="UDP broadcast / mDNS discovery"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:textColor="@color/md_theme_dark_onSurfaceVariant"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Peers list (recycler) -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/peersRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_marginBottom="8dp" />
+
+                    <!-- Empty state -->
+                    <TextView
+                        android:id="@+id/tvNoPeers"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center"
+                        android:text="No peers found yet."
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        android:textColor="@color/md_theme_dark_onSurfaceVariant"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- Scan button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnScan"
+                        style="@style/Widget.PeerDroid.Button.Primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Start Scan"
+                        app:icon="@drawable/ic_launcher_foreground"
+                        app:iconGravity="textStart" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
