@@ -1,16 +1,205 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.PeerDroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        PeerDroid Theme — Dark/Hacker personality
+        Force dark always. No light mode for a security tool.
+        Font: Space Grotesk (display) + JetBrains Mono (mono/data)
+    -->
+    <style name="Theme.PeerDroid" parent="Theme.Material3.Dark">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/md_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_dark_onSecondaryContainer</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/md_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_dark_onTertiaryContainer</item>
+
+        <!-- Surface -->
+        <item name="android:colorBackground">@color/md_theme_dark_background</item>
+        <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/md_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md_theme_dark_error</item>
+        <item name="colorOnError">@color/md_theme_dark_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_dark_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_dark_onErrorContainer</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outlineVariant</item>
+
+        <!-- Typography -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.PeerDroid.DisplayLarge</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.PeerDroid.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.PeerDroid.HeadlineMedium</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.PeerDroid.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.PeerDroid.TitleMedium</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.PeerDroid.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.PeerDroid.BodyMedium</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.PeerDroid.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.PeerDroid.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.PeerDroid.LabelSmall</item>
+
+        <!-- Shapes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.PeerDroid.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.PeerDroid.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.PeerDroid.Large</item>
+
+        <!-- Window -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/md_theme_dark_background</item>
+        <item name="android:windowBackground">@color/md_theme_dark_background</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
     </style>
+
+<!--    &lt;!&ndash; No action bar variant for activities that use MaterialToolbar &ndash;&gt;-->
+    <style name="Theme.PeerDroid.NoActionBar" parent="Theme.PeerDroid">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- ===================== TYPOGRAPHY ===================== -->
+    <!--
+        Display/Headline: Space Grotesk — geometric, technical, strong
+        Body/Label/Mono: JetBrains Mono — data, IPs, ports, message text
+        Add fonts to res/font/ as downloadable fonts
+    -->
+
+    <style name="TextAppearance.PeerDroid.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">700</item>
+        <item name="android:letterSpacing">-0.025</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">700</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+
+    <!-- Body uses JetBrains Mono — all data/message content -->
+    <style name="TextAppearance.PeerDroid.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/jetbrains_mono</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingMultiplier">1.6</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/jetbrains_mono</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/jetbrains_mono</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:letterSpacing">0.06</item>
+    </style>
+
+    <style name="TextAppearance.PeerDroid.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/jetbrains_mono</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+
+    <!-- ===================== SHAPES ===================== -->
+    <!-- Minimal rounding — technical aesthetic, not playful -->
+    <style name="ShapeAppearance.PeerDroid.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+
+    <style name="ShapeAppearance.PeerDroid.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.PeerDroid.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- ===================== COMPONENT OVERRIDES ===================== -->
+
+    <!-- Buttons — tonal filled, sharp feel -->
+    <style name="Widget.PeerDroid.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+    </style>
+
+    <style name="Widget.PeerDroid.Button.Danger" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/md_theme_dark_errorContainer</item>
+        <item name="android:textColor">@color/md_theme_dark_onErrorContainer</item>
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="android:fontWeight">600</item>
+        <item name="rippleColor">@color/md_theme_dark_error</item>
+    </style>
+
+    <style name="Widget.PeerDroid.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">@font/space_grotesk</item>
+        <item name="fontFamily">@font/space_grotesk</item>
+        <item name="strokeColor">@color/md_theme_dark_outline</item>
+        <item name="android:fontWeight">500</item>
+    </style>
+
+    <!-- TextInputLayout -->
+    <style name="Widget.PeerDroid.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/md_theme_dark_outline</item>
+        <item name="boxStrokeWidthFocused">1.5dp</item>
+        <item name="hintTextColor">@color/md_theme_dark_onSurfaceVariant</item>
+        <item name="android:fontFamily">@font/jetbrains_mono</item>
+    </style>
+
 </resources>
