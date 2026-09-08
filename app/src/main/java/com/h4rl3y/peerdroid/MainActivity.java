@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
         String localIp = resolveLocalIpAddress();
         String port = getText(editPort);
         String message = localIp == null
-                ? String.format(Locale.getDefault(), "Tracer session ready on port %s", port)
-                : String.format(Locale.getDefault(), "Tracer session ready at %s:%s", localIp, port);
+                ? String.format(Locale.getDefault(), "PeerDroid session ready on port %s", port)
+                : String.format(Locale.getDefault(), "PeerDroid session ready at %s:%s", localIp, port);
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
