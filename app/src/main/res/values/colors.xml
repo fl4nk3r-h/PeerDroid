@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Seed: Neon Teal — technical, security, dark-primary -->
+    <color name="seed">#00BFA5</color>
+
+    <!-- Dark theme is PRIMARY for PeerDroid — dark/hacker personality -->
+
+    <!-- Primary: teal-green accent -->
+    <color name="md_theme_dark_primary">#4EDAB4</color>
+    <color name="md_theme_dark_onPrimary">#00382D</color>
+    <color name="md_theme_dark_primaryContainer">#005143</color>
+    <color name="md_theme_dark_onPrimaryContainer">#6CF7D0</color>
+
+    <!-- Secondary: muted teal -->
+    <color name="md_theme_dark_secondary">#B1CCC5</color>
+    <color name="md_theme_dark_onSecondary">#1C3531</color>
+    <color name="md_theme_dark_secondaryContainer">#334B47</color>
+    <color name="md_theme_dark_onSecondaryContainer">#CDE8E1</color>
+
+    <!-- Tertiary: cyan accent for status/encryption indicators -->
+    <color name="md_theme_dark_tertiary">#7FCFEA</color>
+    <color name="md_theme_dark_onTertiary">#003544</color>
+    <color name="md_theme_dark_tertiaryContainer">#004D62</color>
+    <color name="md_theme_dark_onTertiaryContainer">#B3EBFF</color>
+
+    <!-- Surfaces — layered dark -->
+    <color name="md_theme_dark_background">#0E1514</color>
+    <color name="md_theme_dark_onBackground">#DCE4E1</color>
+    <color name="md_theme_dark_surface">#0E1514</color>
+    <color name="md_theme_dark_onSurface">#DCE4E1</color>
+    <color name="md_theme_dark_surfaceVariant">#3F4946</color>
+    <color name="md_theme_dark_onSurfaceVariant">#BEC9C6</color>
+    <color name="md_theme_dark_surfaceTint">#4EDAB4</color>
+
+    <!-- Cards sit slightly above background -->
+    <color name="surface_container">#161D1C</color>
+    <color name="surface_container_high">#1E2624</color>
+    <color name="surface_container_highest">#28302E</color>
+
+    <!-- Error -->
+    <color name="md_theme_dark_error">#FFB4AB</color>
+    <color name="md_theme_dark_onError">#690005</color>
+    <color name="md_theme_dark_errorContainer">#93000A</color>
+    <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
+
+    <!-- Outline -->
+    <color name="md_theme_dark_outline">#889390</color>
+    <color name="md_theme_dark_outlineVariant">#3F4946</color>
+
+    <!-- Semantic colors -->
+    <color name="status_connected">#4EDAB4</color>
+    <color name="status_idle">#BEC9C6</color>
+    <color name="status_error">#FFB4AB</color>
+    <color name="status_scanning">#7FCFEA</color>
+
+    <!-- Message bubbles -->
+    <color name="bubble_self">#005143</color>
+    <color name="bubble_self_text">#6CF7D0</color>
+    <color name="bubble_peer">#1E2624</color>
+    <color name="bubble_peer_text">#DCE4E1</color>
+
+    <!-- Light theme (fallback only — app is dark-primary) -->
+    <color name="md_theme_light_primary">#006B57</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#7FF8D4</color>
+    <color name="md_theme_light_surface">#FAFDFB</color>
+    <color name="md_theme_light_background">#FAFDFB</color>
+    <color name="md_theme_light_onSurface">#191C1B</color>
 </resources>
