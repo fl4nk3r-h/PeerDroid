@@ -82,7 +82,6 @@
         Add fonts to res/font/ as downloadable fonts
     -->
     <style name="TextAppearance.PeerDroid.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
-    <style name="TextAppearance.PeerDroid.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
         <item name="fontFamily">@font/space_grotesk</item>
         <item name="android:fontFamily">@font/space_grotesk</item>
         <item name="android:fontWeight">700</item>
