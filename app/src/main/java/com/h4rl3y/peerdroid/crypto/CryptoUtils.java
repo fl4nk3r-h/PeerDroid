@@ -6,6 +6,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Utility class for cryptographic operations.
@@ -60,5 +61,10 @@ public class CryptoUtils {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(256, new SecureRandom());
         return keyGen.generateKey();
+    }
+
+    public static SecretKey getKeyFromString(String keyString) {
+        byte[] keyBytes = Base64.getDecoder().decode(keyString);
+        return new SecretKeySpec(keyBytes, "AES");
     }
 }
